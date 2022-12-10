@@ -1,0 +1,17 @@
+{
+  "name": "doc-browns-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "node esbuild.js dev",
+    "build": "node esbuild.js prod"
+  },
+  "devDependencies": {
+    "esbuild": "^0.12.15",
+    "esbuild-svelte": "^0.5.3",
+    "live-server": "^1.2.1",
+    "sass": "^1.56.2",
+    "svelte": "^3.54.0",
+    "svelte-preprocess": "^4.10.7"
+  }
+}
