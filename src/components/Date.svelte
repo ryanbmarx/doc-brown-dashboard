@@ -4,18 +4,20 @@
   import AmPm from "./AmPm.svelte";
 
   export let label = "";
-  export let dateTarget = new Date();
+  export let dateTarget;
   export let accentColor;
 
   $: month = months[dateTarget.getMonth()];
   $: day = String(dateTarget.getDate()).padStart(2, 0);
   $: year = dateTarget.getFullYear();
-  $: hours = String(dateTarget.getHours()).padStart(2, 0);
+  $: hours =
+    dateTarget.getHours() < 12
+      ? String(dateTarget.getHours()).padStart(2, 0)
+      : String(dateTarget.getHours() - 12).padStart(2, 0);
   $: minutes = String(dateTarget.getMinutes()).padStart(2, 0);
 
   const translateX = randomIntFromInterval(-5, 5);
   const translateY = randomIntFromInterval(-2, 5);
-  const rotate = randomIntFromInterval(-0.6, 0.6);
   const id = `${Math.random()}-label`;
   const months = [
     "Jan",
@@ -85,7 +87,7 @@
   }
 
   .date__display::after {
-    content: "8888";
+    content: "888888888";
     font-size: inherit;
     color: currentColor;
     font-family: inherit;
@@ -131,8 +133,8 @@
     background: var(--color-accent);
     background: radial-gradient(
       circle at 25% 18%,
-      #ffffff,
-      var(--color-accent) 45%
+      #dddddd,
+      var(--color-accent) 65%
     );
     border-radius: 50%;
     transform: translate(51%, 0);
@@ -148,33 +150,50 @@
   aria-labelledby={id}
   class="date"
   style:--color-accent={accentColor}
-  style:--rotate="{rotate}deg"
   style:--translateX="{translateX}px"
   style:--translateY="{translateY}px"
   style:border-radius="{randomIntFromInterval(2, 5)}px"
 >
-  <div class="date__part date__part--month">
+  <div
+    class="date__part date__part--month"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span class="date__text">Month</span>
     <span class="date__display">{month}</span>
   </div>
-  <div class="date__part date__part--day">
+  <div
+    class="date__part date__part--day"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span class="date__text">Day</span>
     <span class="date__display">{day}</span>
   </div>
-  <div class="date__part date__part--year">
+  <div
+    class="date__part date__part--year"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span class="date__text">Year</span>
     <span class="date__display">{year}</span>
   </div>
   <AmPm am={hours < 12} />
-  <div class="date__part date__part--hours">
+  <div
+    class="date__part date__part--hours"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span class="date__text">Hour</span>
     <span class="date__display">{hours}</span>
   </div>
-  <div class="date__part date__part--minutes">
+  <div
+    class="date__part date__part--minutes"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span class="date__text">Min</span>
     <span class="date__display">{minutes}</span>
   </div>
-  <div class="date__label">
+  <div
+    class="date__label"
+    style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
+  >
     <span {id} class="date__text">{label}</span>
   </div>
 </div>

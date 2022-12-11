@@ -25,7 +25,8 @@ let watch = false;
 if (!production) {
   watch = {
     onRebuild(error) {
-      if (error) console.error("esbuild: Watch build failed:", error.getMessage());
+      if (error)
+        console.error("esbuild: Watch build failed:", error.getMessage());
       else console.log("esbuild: Watch build succeeded");
     },
   };
@@ -39,7 +40,7 @@ const options = {
   watch,
   format: "iife",
   minify: production,
-  sourcemap: false,
+  sourcemap: !production,
   outfile: "./public/build/bundle.js", // and bundle.css
   plugins: [sveltePlugin()],
 };
@@ -57,7 +58,7 @@ if (!production) {
 }
 
 // esbuild dev + prod
-esbuild.build(options).catch(err => {
+esbuild.build(options).catch((err) => {
   console.error(err);
   process.exit(1);
 });

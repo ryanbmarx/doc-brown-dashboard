@@ -1,7 +1,48 @@
 <script>
   import DateModule from "./components/Date.svelte";
+  import Keypad from "./components/Keypad.svelte";
+  import Speedometer from "./components/Speedometer.svelte";
 
-  export let name;
+  let keypad;
+
+  let datesVisited = [new Date(1985, 9, 26, 1, 21, 0)];
+
+  const dates = [
+    {
+      dateTarget: new Date(1985, 9, 26, 1, 20, 0),
+      accentColor: "#F6581B",
+      label: "Destination time",
+    },
+    {
+      dateTarget: new Date(),
+      accentColor: "#4FC93F",
+      label: "Present time",
+    },
+
+    {
+      dateTarget: datesVisited.at(-1),
+      accentColor: "#E6CA36",
+      label: "Last time departed",
+    },
+  ];
+  // const dates = [
+  //   {
+  //     dateTarget: new Date(1985, 9, 26, 1, 21, 0),
+  //     accentColor: "#F6581B",
+  //     label: "Destination time",
+  //   },
+  //   {
+  //     dateTarget: new Date(1985, 9, 26, 13, 22, 0),
+  //     accentColor: "#4FC93F",
+  //     label: "Present time",
+  //   },
+
+  //   {
+  //     dateTarget: new Date(1985, 9, 26, 1, 20, 0),
+  //     accentColor: "#E6CA36",
+  //     label: "Last time departed",
+  //   },
+  // ];
 </script>
 
 <style>
@@ -18,28 +59,28 @@
   }
 
   .dash {
+    grid-column: 1/-1;
     padding: 1rem;
     background-color: #222;
     display: flex;
     flex-flow: column nowrap;
     gap: 0.5rem;
   }
+
+  main {
+    display: grid;
+    gap: var(--gap);
+    grid-template: auto auto / minmax(1px, 2fr) minmax(1px, 1fr);
+  }
 </style>
 
-<div class="dash">
-  <DateModule
-    dateTarget={new Date(1985, 9, 26, 1, 21, 0)}
-    accentColor="#F6581B"
-    label="Destination time"
-  />
-  <DateModule
-    dateTarget={new Date(1985, 9, 26, 13, 22, 0)}
-    accentColor="#4FC93F"
-    label="Present time"
-  />
-  <DateModule
-    dateTarget={new Date(1985, 9, 26, 1, 20, 0)}
-    accentColor="#E6CA36"
-    label="Last time departed"
-  />
-</div>
+<main>
+  <div class="dash">
+    {#each dates as { dateTarget, accentColor, label }}
+      <DateModule {dateTarget} {accentColor} {label} />
+    {/each}
+  </div>
+
+  <Keypad bind:this={keypad} />
+  <Speedometer />
+</main>
