@@ -105,3 +105,8 @@ dist
 
 
 .DS_Store
+
+
+public/*.map
+public/*.css
+public/*.js

@@ -12,17 +12,20 @@
       dateTarget: new Date(1985, 9, 26, 1, 20, 0),
       accentColor: "#F6581B",
       label: "Destination time",
+      class: "destination",
     },
     {
       dateTarget: new Date(),
       accentColor: "#4FC93F",
       label: "Present time",
+      class: "present",
     },
 
     {
       dateTarget: datesVisited.at(-1),
       accentColor: "#E6CA36",
       label: "Last time departed",
+      class: "departed",
     },
   ];
   // const dates = [
@@ -76,8 +79,8 @@
 
 <main>
   <div class="dash">
-    {#each dates as { dateTarget, accentColor, label }}
-      <DateModule {dateTarget} {accentColor} {label} />
+    {#each dates as date}
+      <DateModule {...date} />
     {/each}
   </div>
 

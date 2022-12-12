@@ -2,10 +2,14 @@
   import { randomIntFromInterval } from "../utils/random.js";
   import { onMount } from "svelte";
   import AmPm from "./AmPm.svelte";
+  import LED from "./LED.svelte";
 
   export let label = "";
   export let dateTarget;
   export let accentColor;
+
+  let clazz;
+  export { clazz as class };
 
   $: month = months[dateTarget.getMonth()];
   $: day = String(dateTarget.getDate()).padStart(2, 0);
@@ -16,6 +20,7 @@
       : String(dateTarget.getHours() - 12).padStart(2, 0);
   $: minutes = String(dateTarget.getMinutes()).padStart(2, 0);
 
+  const textAlign = "left";
   const translateX = randomIntFromInterval(-5, 5);
   const translateY = randomIntFromInterval(-2, 5);
   const id = `${Math.random()}-label`;
@@ -41,6 +46,7 @@
 
 <style>
   .date {
+    --speedometer-color: var(--color-accent);
     display: grid;
     gap: 0.25rem calc(2 * var(--gap));
     grid-template-rows: minmax(1px 1fr) auto;
@@ -148,7 +154,7 @@
 
 <div
   aria-labelledby={id}
-  class="date"
+  class="date {clazz}"
   style:--color-accent={accentColor}
   style:--translateX="{translateX}px"
   style:--translateY="{translateY}px"
@@ -159,21 +165,23 @@
     style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
   >
     <span class="date__text">Month</span>
-    <span class="date__display">{month}</span>
+    <!-- <span class="date__display">{month}</span> -->
+    <LED number={month} {textAlign} />
   </div>
   <div
     class="date__part date__part--day"
     style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
   >
     <span class="date__text">Day</span>
-    <span class="date__display">{day}</span>
+    <!-- <span class="date__display">{day}</span> -->
+    <LED number={day} {textAlign} />
   </div>
   <div
     class="date__part date__part--year"
     style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
   >
     <span class="date__text">Year</span>
-    <span class="date__display">{year}</span>
+    <LED number={year} {textAlign} />
   </div>
   <AmPm am={hours < 12} />
   <div
@@ -181,14 +189,14 @@
     style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
   >
     <span class="date__text">Hour</span>
-    <span class="date__display">{hours}</span>
+    <LED number={hours} {textAlign} />
   </div>
   <div
     class="date__part date__part--minutes"
     style:--rotate="{randomIntFromInterval(-0.6, 0.6)}deg"
   >
     <span class="date__text">Min</span>
-    <span class="date__display">{minutes}</span>
+    <LED number={minutes} {textAlign} />
   </div>
   <div
     class="date__label"

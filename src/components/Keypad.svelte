@@ -55,7 +55,7 @@
   .controls__keypad {
     grid-row: 2;
     grid-column: 2;
-    /* padding: var(--lights-padding); */
+    padding: 2rem;
   }
 
   .keypad {
